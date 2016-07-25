@@ -46,9 +46,11 @@ shinyUI(fluidPage(
                 tabPanel("Heatmap",
                     h2("Heatmap with clustering"),
                     plotOutput("heatmapC"),
+                    downloadButton('downloadPlot1', 'Download Plot'),
                     tags$hr(),
                     h2("Heatmap without clustering"),
-                    plotOutput("heatmap")
+                    plotOutput("heatmap"),
+                    downloadButton('downloadPlot2', 'Download Plot')
                 ),
                 tabPanel("Source Data",
                     dataTableOutput("valuestable")

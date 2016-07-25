@@ -17,16 +17,39 @@ shinyServer(function(input, output) {
     })
         
     
-    output$heatmapC <- renderPlot(generateHeatmap(rawdata, cluster = TRUE,
-                                                 ncolsteps = nc(),
-                                                 colors = c(loC(), hiC()),
-                                                 tweakcolor = tw()
-                                                 ))
+    heatmapC <- reactive(
+        generateHeatmap(rawdata, cluster = TRUE,
+                        ncolsteps = nc(),
+                        colors = c(loC(), hiC()),
+                        tweakcolor = tw()
+        )
+    )
     
-    output$heatmap <- renderPlot(generateHeatmap(rawdata, cluster = FALSE,
-                                                  ncolsteps = nc(),
-                                                  colors = c(loC(), hiC()),
-                                                  tweakcolor = tw()
-                                                  ))
+    heatmap <- reactive(
+        generateHeatmap(rawdata, cluster = FALSE,
+                        ncolsteps = nc(),
+                        colors = c(loC(), hiC()),
+                        tweakcolor = tw()
+        )
+    )
+    
+    output$heatmapC <- renderPlot(heatmapC())
+    output$heatmap  <- renderPlot(heatmap())
+    
+    output$downloadPlot1 <- downloadHandler(
+        filename = 'heatmap_clustering.png',
+        content = function(file) {
+            png(file, width=1000, height=1000)
+            print(heatmapC())
+            dev.off()
+        })
+    
+    output$downloadPlot2 <- downloadHandler(
+        filename = 'heatmap.png',
+        content = function(file) {
+            png(file, width=1000, height=1000)
+            print(heatmap())
+            dev.off()
+        }) 
     
 })
