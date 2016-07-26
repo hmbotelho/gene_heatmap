@@ -6,7 +6,7 @@ shinyUI(fluidPage(
         sidebarPanel(
             helpText("Please upload a file from your computer and select plotting options."),
             
-            fileInput('file1', 'Choose CSV File',
+            fileInput('file1', 'Choose File',
                       accept=c('text/csv', 
                                'text/comma-separated-values,text/plain', 
                                '.csv')),
@@ -37,6 +37,11 @@ shinyUI(fluidPage(
                            Orange='orange',
                            Yellow='yellow'),
                          ','),
+            
+            tags$hr(),
+            sliderInput("marLower", "Margin (down)",  min=0, max=20, value=5, step=0.5),
+            sliderInput("marRight", "Margin (right)", min=0, max=20, value=5, step=0.5),
+            
             br(),
             tags$hr(),
             p(strong("Author: "), "Hugo Botelho, 2016", a("e-mail" , href= "mailto:hugobotelho@gmail.com"))
@@ -55,7 +60,9 @@ shinyUI(fluidPage(
                 tabPanel("Source Data",
                     dataTableOutput("valuestable")
                 )
-            )
+            ),
+            br(),br(),
+            p(strong("Reference:"), "Khomtchouk ", tags$i("et al"), "(2014) Source Code Biol Med 9(1):30 [", a("URL", href = "http://www.ncbi.nlm.nih.gov/pubmed/25550709"), "]")
         )
     )
 ))

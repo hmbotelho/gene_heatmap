@@ -8,3 +8,8 @@ if (!require("gplots")) {
     install.packages("gplots")
     library(gplots)
 }
+
+if (!require("colorspace")) {
+    install.packages("colorspace")
+    library(colorspace)
+}

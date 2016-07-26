@@ -9,6 +9,8 @@ shinyServer(function(input, output) {
     loC <- reactive(as.character(input$lowCol))
     hiC <- reactive(as.character(input$highCol))
     tw <- reactive(as.numeric(input$tweak))
+    mL <- reactive(as.numeric(input$marLower))
+    mR <- reactive(as.numeric(input$marRight))
 
     output$valuestable <- renderDataTable({temp <- as.data.frame(rawdata())
                                            temp <- cbind(row.names(temp), temp)
@@ -17,19 +19,21 @@ shinyServer(function(input, output) {
     })
         
     
-    heatmapC <- reactive(
-        generateHeatmap(rawdata, cluster = TRUE,
+    heatmapC <- reactive({
+        generateHeatmap(as.matrix(rawdata()), cluster = TRUE,
                         ncolsteps = nc(),
                         colors = c(loC(), hiC()),
-                        tweakcolor = tw()
+                        tweakcolor = tw(),
+                        mar = c(mL(), mR())
         )
-    )
+    })
     
     heatmap <- reactive(
-        generateHeatmap(rawdata, cluster = FALSE,
+        generateHeatmap(as.matrix(rawdata()), cluster = FALSE,
                         ncolsteps = nc(),
                         colors = c(loC(), hiC()),
-                        tweakcolor = tw()
+                        tweakcolor = tw(),
+                        mar = c(mL(), mR())
         )
     )
     
@@ -40,16 +44,14 @@ shinyServer(function(input, output) {
         filename = 'heatmap_clustering.png',
         content = function(file) {
             png(file, width=1000, height=1000)
-            print(heatmapC())
+            print(renderPlot(heatmapC()))
             dev.off()
         })
     
     output$downloadPlot2 <- downloadHandler(
         filename = 'heatmap.png',
         content = function(file) {
-            png(file, width=1000, height=1000)
-            print(heatmap())
-            dev.off()
+            plotPNG(renderPlot(heatmapC()), width = 400, height = 400, res = 72)
         }) 
     
 })

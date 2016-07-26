@@ -19,9 +19,8 @@ col2Hue <- function(colorname){
 }
 
 
-generateHeatmap <- function(matrix, cluster=TRUE, ncolsteps = 2, colors = c("red", "green"), tweakcolor = 1){
-#par(mar = c(5, 4, 4, 2) + 0.1)
-    
+generateHeatmap <- function(matrix, cluster=TRUE, ncolsteps = 2, colors = c("red", "green"), tweakcolor = 1, mar = c(5,5)){
+
     if(is.na(colors[1])) {colors[1] <- "red"}
     if(is.na(colors[2])) {colors[2] <- "green"}
     
@@ -31,17 +30,17 @@ generateHeatmap <- function(matrix, cluster=TRUE, ncolsteps = 2, colors = c("red
         LUT <- diverge_hcl(255, h = c(col2Hue(colors[1]), col2Hue(colors[2])), c = 200, l = c(50*tweakcolor, 50*tweakcolor))
     }
     
-    
     if(cluster){
         # Generate heatmap with clustering
-        heatmap.2(rawdata, col = LUT, breaks = length(LUT)+1, 
+        heatmap.2(matrix, col = LUT, breaks = length(LUT)+1, 
                   keysize = 1.3,
                   key.title = "",
-                  key.xlab = "")
+                  key.xlab = "",
+                  margins =  mar)
         
     } else{
         # Generate heatmap WITHOUT clustering
-        heatmap.2(rawdata, col = LUT,
+        heatmap.2(matrix, col = LUT,
                   breaks = length(LUT)+1,
                   Rowv = FALSE, 
                   Colv = FALSE,
@@ -50,6 +49,7 @@ generateHeatmap <- function(matrix, cluster=TRUE, ncolsteps = 2, colors = c("red
                   density.info = "none",
                   key.title = "",
                   key.xlab = "",
-                  keysize = 1.3)
+                  keysize = 1.3,
+                  margins =  mar)
     }
 }

@@ -1,0 +1,9 @@
+name: gene_heatmap
+account: hmbotelho
+server: shinyapps.io
+appId: 116650
+bundleId: 515593
+url: https://hmbotelho.shinyapps.io/gene_heatmap/
+when: 1469522897.76816
+asMultiple: FALSE
+asStatic: FALSE
