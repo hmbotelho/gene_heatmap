@@ -4,7 +4,7 @@ shinyUI(fluidPage(
     titlePanel("Gene Heatmap"),
     sidebarLayout(
         sidebarPanel(
-            helpText("Please upload a file from your computer and select plotting options."),
+            helpText("Upload a data file and select plotting options.", a("Example file", href= "https://raw.githubusercontent.com/hmbotelho/gene_heatmap/master/datasets/EXAMPLE.txt")),
             
             fileInput('file1', 'Choose File',
                       accept=c('text/csv', 
